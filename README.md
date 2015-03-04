@@ -47,6 +47,7 @@ Supports
 * Rails 4+
 * Rails default generators (erb, test::unit)
 * Haml (if haml is used for views generation)
+* Slim (if slim gem is used for views generation)
 * Twitter bootstrap support
 * Jbuilder (if jbuilder is installed for the project)
 
