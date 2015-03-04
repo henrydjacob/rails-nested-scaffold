@@ -2,11 +2,11 @@
   - if @<%= singular_table_name %>.errors.any?
     #error_explanation.panel.panel-danger
       .panel-heading
-        %h2.panel-title= "#{pluralize(@<%= singular_table_name %>.errors.count, "error")} prohibited this <%= singular_table_name %> from being saved:"
+        h2.panel-title= "#{pluralize(@<%= singular_table_name %>.errors.count, "error")} prohibited this <%= singular_table_name %> from being saved:"
       .panel-body
-        %ul
+        ul
           - @<%= singular_table_name %>.errors.full_messages.each do |msg|
-            %li= msg
+            li= msg
 
 <% for attribute in attributes -%>
   <%- if attribute.field_type != :check_box -%>
