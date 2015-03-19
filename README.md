@@ -1,4 +1,4 @@
-rails-admin-scaffold [![Build Status](https://travis-ci.org/dhampik/rails-admin-scaffold.png?branch=master)](https://travis-ci.org/dhampik/rails-admin-scaffold)
+rails-nested-scaffold [![Build Status](https://travis-ci.org/dhampik/rails-nested-scaffold.png?branch=master)](https://travis-ci.org/dhampik/rails-admin-scaffold)
 ====================
 
 Rails 4 generator which allows to scaffold admin controllers, views with proper (non-namespaced) models, helpers, tests and routes
