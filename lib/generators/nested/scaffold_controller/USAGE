@@ -11,5 +11,5 @@ Description:
     If you want change the prefix name 'admin' to something else you can pass --prefix_name option
 
 Example:
-    `bin/rails generate admin:scaffold_controller Post`
-    `bin/rails g admin:scaffold_controller Post title:string content:text published:boolean --prefix_name=manager`
+    `bin/rails generate nested:scaffold_controller Post`
+    `bin/rails g nested:scaffold_controller Post title:string content:text published:boolean --prefix_name=manager`

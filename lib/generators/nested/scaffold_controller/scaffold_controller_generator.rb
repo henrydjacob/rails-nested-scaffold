@@ -23,8 +23,11 @@ module Admin
       class_option :html, type: :boolean, default: true,
                    desc: "Generate a scaffold with HTML output"
 
-      class_option :prefix_name, banner: "admin", type: :string, default: "admin",
+      class_option :prefix_name, banner: "admin", type: :string, default: nil,
                    desc: "Define the prefix of controller"
+
+      class_option :nested_resource_name, banner: "post", type: :string, default: nil,
+                   desc: "Define the nested resoruce name"
 
       class_option :parent_controller, banner: "admin", type: :string, default: "application",
                    desc: "Define the parent controller"
@@ -43,17 +46,30 @@ module Admin
       end
 
       def create_controller_files
+
+        if prefix.blank?
+          file_name = File.join('app/controllers', class_path, "#{controller_file_name}_controller.rb")
+        else
+          file_name = File.join('app/controllers', prefix, class_path, "#{controller_file_name}_controller.rb")
+        end
+
         # I think there should be a better way to detect if jbuilder is in use
         # If you know it, please let me know
         if Gem::Specification.find_all_by_name('jbuilder').length >= 1
-          template "controllers/jbuilder/controller.rb.erb", File.join('app/controllers', prefix, class_path, "#{controller_file_name}_controller.rb")
+          template "controllers/jbuilder/controller.rb.erb", file_name
         else
-          template "controllers/railties/controller.rb.erb", File.join('app/controllers', prefix, class_path, "#{controller_file_name}_controller.rb")
+          template "controllers/railties/controller.rb.erb", file_name
         end
       end
 
       def create_test_files
-        template "tests/test_unit/functional_test.rb.erb", File.join("test/controllers", prefix, controller_class_path, "#{controller_file_name}_controller_test.rb")
+        if prefix.blank?
+          file_name = File.join("test/controllers", controller_class_path, "#{controller_file_name}_controller_test.rb")
+        else
+          file_name = File.join("test/controllers", prefix, controller_class_path, "#{controller_file_name}_controller_test.rb")
+        end
+
+        template "tests/test_unit/functional_test.rb.erb", file_name
       end
 
       hook_for :helper, in: :rails do |helper|
@@ -97,12 +113,24 @@ module Admin
         options[:prefix_name]
       end
 
+      def nested_resource
+        options[:nested_resource_name]
+      end
+
       def prefixed_class_name
-        "#{prefix.capitalize}::#{class_name}"
+        if prefix.blank?
+          "#{class_name}"
+        else
+          "#{prefix.capitalize}::#{class_name}"
+        end  
       end
 
       def prefixed_controller_class_name
-        "#{prefix.capitalize}::#{controller_class_name}"
+        if prefix.blank?
+          "#{controller_class_name}"
+        else
+          "#{prefix.capitalize}::#{controller_class_name}"
+        end  
       end
 
       def parent_controller_class_name
