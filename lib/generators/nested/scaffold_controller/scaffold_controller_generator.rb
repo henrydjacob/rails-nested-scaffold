@@ -134,6 +134,14 @@ module Nested
         options[:nested_resource_name]
       end
 
+      def prefixed_path_name
+        if prefix.blank?
+          "@#{nested_resource}"
+        else
+          ":#{prefix}, @#{nested_resource}"
+        end  
+      end
+
       def prefixed_class_name
         if prefix.blank?
           "#{class_name}"
