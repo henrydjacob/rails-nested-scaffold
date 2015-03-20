@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Henry Jacob"]
   s.email       = ["henrydjacob@gmail.com"]
-  s.homepage    = "http://github.com/henrydjacob/rails-admin-scaffold"
+  s.homepage    = "http://github.com/henrydjacob/rails-nested-scaffold"
   s.summary     = "Rails admin controllers scaffolding generator"
   s.description = "Rails generator which allows to scaffold admin controllers, views with proper (non-namespaced) models, helpers, tests and routes"
   s.licenses    = ["MIT"]

@@ -2,7 +2,7 @@ require 'rubygems/specification'
 require 'rails/generators/named_base'
 require 'rails/generators/resource_helpers'
 
-module Admin
+module Nested
   module Generators
     class ScaffoldControllerGenerator < Rails::Generators::NamedBase
       include Rails::Generators::ResourceHelpers
