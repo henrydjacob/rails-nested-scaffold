@@ -5,7 +5,7 @@ require_dependency "<%= namespaced_file_path %>/application_controller"
 <% module_namespacing do -%>
 class <%= prefixed_controller_class_name %>Controller < <%= parent_controller_class_name %>Controller
   
-  before_action :set_<%= namespace %>
+  before_action :set_<%= nested_resource %>
 
   before_action :set_<%= singular_table_name %>, only: [:show, :edit, :update, :destroy]
 
@@ -56,8 +56,8 @@ class <%= prefixed_controller_class_name %>Controller < <%= parent_controller_cl
   private
 
     # Use callbacks to share common setup or constraints between actions.
-    def set_<%= namespace %>
-      @<%= namespace %> = <%= orm_class.find(namespace, "params[:id]") %>
+    def set_<%= nested_resource %>
+      @<%= nested_resource %> = <%= orm_class.find(nested_resource, "params[:id]") %>
     end
 
     # Use callbacks to share common setup or constraints between actions.
