@@ -55,9 +55,8 @@ class <%= prefixed_controller_class_name %>Controller < <%= parent_controller_cl
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
     def set_<%= nested_resource %>
-      @<%= nested_resource %> = <%= orm_class.find(nested_resource, "params[:id]") %>
+      @<%= nested_resource %> = <%= orm_class.find(nested_resourcecapitalize, "params[:#{nested_resource}id]") %>
     end
 
     # Use callbacks to share common setup or constraints between actions.

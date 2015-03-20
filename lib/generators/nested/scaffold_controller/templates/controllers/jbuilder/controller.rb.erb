@@ -5,13 +5,13 @@ require_dependency "<%= namespaced_file_path %>/application_controller"
 <% module_namespacing do -%>
 class <%= prefixed_controller_class_name %>Controller < <%= parent_controller_class_name %>Controller
 
-  before_action :set_<%= nested_resource %>
+  before_action :set_<%= nested_resource %>, only: [:index, :new, :create]
   before_action :set_<%= singular_table_name %>, only: [:show, :edit, :update, :destroy]
 
   # GET <%= prefixed_route_url %>
   # GET <%= prefixed_route_url %>.json
   def index
-    @<%= plural_table_name %> = <%= orm_class.all(class_name) %>
+    @<%= plural_table_name %> = <%= orm_class.all("@#{nested_resource}.#{plural_table_name}") %>
   end
 
   # GET <%= prefixed_route_url %>/1
@@ -21,7 +21,7 @@ class <%= prefixed_controller_class_name %>Controller < <%= parent_controller_cl
 
   # GET <%= prefixed_route_url %>/new
   def new
-    @<%= singular_table_name %> = <%= orm_class.build(class_name) %>
+    @<%= singular_table_name %> = <%= orm_class.build("@#{nested_resource}.#{plural_table_name}") %>
   end
 
   # GET <%= prefixed_route_url %>/1/edit
@@ -31,7 +31,7 @@ class <%= prefixed_controller_class_name %>Controller < <%= parent_controller_cl
   # POST <%= prefixed_route_url %>
   # POST <%= prefixed_route_url %>.json
   def create
-    @<%= singular_table_name %> = <%= orm_class.build(class_name, "#{singular_table_name}_params") %>
+    @<%= singular_table_name %> = <%= orm_class.build("@#{nested_resource}.#{plural_table_name}", "#{singular_table_name}_params") %>
 
     respond_to do |format|
       if @<%= orm_instance.save %>
@@ -70,9 +70,8 @@ class <%= prefixed_controller_class_name %>Controller < <%= parent_controller_cl
 
   private
 
-    # Use callbacks to share common setup or constraints between actions.
     def set_<%= nested_resource %>
-      @<%= nested_resource %> = <%= orm_class.find(nested_resource, "params[:id]") %>
+      @<%= nested_resource %> = <%= orm_class.find(nested_resourcecapitalize, "params[:#{nested_resource}id]") %>
     end
 
     # Use callbacks to share common setup or constraints between actions.
