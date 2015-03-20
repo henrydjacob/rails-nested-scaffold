@@ -77,7 +77,12 @@ module Nested
       end
 
       def create_root_folder
-        empty_directory File.join("app/views", prefix, controller_file_path)
+        if prefix.blank?
+          file_name = File.join("app/views", controller_file_path)
+        else
+          file_name = File.join("app/views", prefix, controller_file_path)
+        end        
+        empty_directory file_name
       end
 
       def copy_view_files
@@ -88,13 +93,25 @@ module Nested
           else
             template_path = "views/#{handler}/#{filename}.erb"
           end
-          template template_path, File.join("app/views", prefix, controller_file_path, filename)
+          if prefix.blank?
+            file_name = File.join("app/views", controller_file_path, filename)
+          else
+            file_name = File.join("app/views", prefix, controller_file_path, filename)
+          end        
+
+          template template_path, file_name
         end
 
         # I think there should be a better way to detect if jbuilder is in use
         if Gem::Specification.find_all_by_name('jbuilder').length >= 1
           %w(index show).each do |view|
-            template "views/jbuilder/#{view}.json.jbuilder.erb", File.join("app/views", prefix, controller_file_path, "#{view}.json.jbuilder")
+            if prefix.blank?
+              file_name = File.join("app/views", controller_file_path, "#{view}.json.jbuilder")
+            else
+              file_name = File.join("app/views", prefix, controller_file_path, "#{view}.json.jbuilder")
+            end        
+
+            template "views/jbuilder/#{view}.json.jbuilder.erb", file_name
           end
         end
       end
