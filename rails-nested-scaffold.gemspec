@@ -7,7 +7,7 @@ require "rails-nested-scaffold/version"
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "rails-nested-scaffold"
-  s.version     = RailsAdminScaffold::VERSION
+  s.version     = RailsNestedScaffold::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Henry Jacob"]
   s.email       = ["henrydjacob@gmail.com"]
