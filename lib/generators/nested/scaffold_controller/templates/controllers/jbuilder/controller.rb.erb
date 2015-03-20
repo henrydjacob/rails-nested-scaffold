@@ -4,6 +4,8 @@ require_dependency "<%= namespaced_file_path %>/application_controller"
 <% end -%>
 <% module_namespacing do -%>
 class <%= prefixed_controller_class_name %>Controller < <%= parent_controller_class_name %>Controller
+
+  before_action :set_<%= nested_resource %>
   before_action :set_<%= singular_table_name %>, only: [:show, :edit, :update, :destroy]
 
   # GET <%= prefixed_route_url %>
@@ -67,6 +69,12 @@ class <%= prefixed_controller_class_name %>Controller < <%= parent_controller_cl
   end
 
   private
+
+    # Use callbacks to share common setup or constraints between actions.
+    def set_<%= nested_resource %>
+      @<%= nested_resource %> = <%= orm_class.find(nested_resource, "params[:id]") %>
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_<%= singular_table_name %>
       @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
