@@ -4,6 +4,9 @@ require_dependency "<%= namespaced_file_path %>/application_controller"
 <% end -%>
 <% module_namespacing do -%>
 class <%= prefixed_controller_class_name %>Controller < <%= parent_controller_class_name %>Controller
+  
+  before_action :set_<%= namespace %>
+
   before_action :set_<%= singular_table_name %>, only: [:show, :edit, :update, :destroy]
 
   # GET <%= prefixed_route_url %>
@@ -51,6 +54,12 @@ class <%= prefixed_controller_class_name %>Controller < <%= parent_controller_cl
   end
 
   private
+
+    # Use callbacks to share common setup or constraints between actions.
+    def set_<%= namespace %>
+      @<%= namespace %> = <%= orm_class.find(namespace, "params[:id]") %>
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_<%= singular_table_name %>
       @<%= singular_table_name %> = <%= orm_class.find(class_name, "params[:id]") %>
